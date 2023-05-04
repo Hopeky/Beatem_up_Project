@@ -41,7 +41,7 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
         ComboAttacks();
-        ResetComboState()
+        ResetComboState();
     }
 
     void ComboAttacks()
@@ -54,17 +54,17 @@ public class PlayerAttack : MonoBehaviour
 
             if(current_Combo_State == ComboState.PUNCH_1)
             {
-                player_Anim.Punch1();
+                player_Anim.Punch_1();
             }
             
             if(current_Combo_State == ComboState.PUNCH_2)
             {
-                player_Anim.Punch2();
+                player_Anim.Punch_2();
             }
 
             if(current_Combo_State == ComboState.PUNCH_3)
             {
-                player_Anim.Punch3();
+                player_Anim.Punch_3();
             }
 
 
@@ -86,7 +86,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 current_Combo_State = ComboState.NONE;
 
-                activateTimerToReset = false;
+                activateTimeToReset = false;
                 current_Combo_Timer = default_Combo_Timer;
             }
         }
