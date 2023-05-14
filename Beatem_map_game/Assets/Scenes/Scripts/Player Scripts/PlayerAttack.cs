@@ -48,6 +48,10 @@ public class PlayerAttack : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Z))
         {
+            if (current_Combo_State == ComboState.PUNCH_3 || current_Combo_State == ComboState.KICK_1 || current_Combo_State == ComboState.KICK_2) return;
+
+
+
             current_Combo_State++;
             activateTimeToReset = true;
             current_Combo_Timer = default_Combo_Timer;
@@ -68,12 +72,40 @@ public class PlayerAttack : MonoBehaviour
             }
 
 
-        }
+        } // if punch
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            player_Anim.Kick_1();
-        }
+            // if the current combo is punch 3 or kick 2
+            // return meaning exit because we have no combos to perform
+            if (current_Combo_State == ComboState.KICK_2 || current_Combo_State == ComboState.PUNCH_3) return;
+
+            // if the current combo state is NONE, or punch1 or punch2
+            // then we can set current combo state to kick 1 to chain the combo
+            if (current_Combo_State == ComboState.NONE || current_Combo_State == ComboState.PUNCH_1 || current_Combo_State == ComboState.PUNCH_2)
+            {
+                current_Combo_State = ComboState.KICK_1;
+            }
+            else if (current_Combo_State == ComboState.KICK_1) 
+            {
+                // move to kick2
+                current_Combo_State++;
+            }
+
+            activateTimeToReset = true;
+            current_Combo_Timer = default_Combo_Timer;
+
+            if (current_Combo_State == ComboState.KICK_1) 
+            {
+                player_Anim.Kick_1();
+            }
+
+            if (current_Combo_State == ComboState.KICK_2) 
+            {
+                player_Anim.Kick_2();
+            }
+
+        } //if kick
     } // Combo attacks
 
     void ResetComboState()
