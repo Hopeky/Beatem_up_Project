@@ -38,14 +38,65 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Attack();
+    }
+
+    void FixedUpdate()
+    {
         FollowTarget();
     }
 
     void FollowTarget()
     {
+        // if we are not supposed to follow the player
+        if (!followPlayer)
+            return;
+        // if 
+        if(Vector3.Distance)(transform.position, playerTarget.position) > attack_Distance) 
+        {
+            transform.LookAt(playerTarget);
+            myBody.velocity = transform.forward * speed;
 
-    }
+            if(myBody.velocity.sqrMagnitude != 0)
+            {
+                enemyAnim.Walk(true);
+            }
+        } else if(Vector3.Distance(transform.position, playerTarget.position) <= attack_Distance)
+        {
+            myBody.velocity = Vector3.zero;
+            enemyAnim.Walk(false);
+
+            followPlayer() = false;
+            attackPlayer() = true;
+        }
+    } // Follow target
+
+    void Attack()
+    {
+        // if we should NOT the attack player
+        // exit the function
+        if (!attackPlayer)
+            return;
+
+        current_Attack_Time += Time.deltaTime;
+
+        if(current_Attack_Time > default_Attack_Time)
+        {
+            enemyAnim.EnemyAttack(Random.Range(0, 3));
+
+            current_Attack_Time = 0f;
+        }
+
+        if(Vector3.Distance(transform.position, playerTarget.position) > attack_Distance + chase_Player_After_Attack)
+        {
+            attackPlayer = false;
+            followPlayer = true;
+        }
+
+    } // Attack
+
+} //class
 
 
 
-}
+
