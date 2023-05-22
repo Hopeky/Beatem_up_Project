@@ -52,22 +52,23 @@ public class EnemyMovement : MonoBehaviour
         if (!followPlayer)
             return;
         // if 
-        if(Vector3.Distance)(transform.position, playerTarget.position) > attack_Distance) 
+        if(Vector3.Distance(transform.position, playerTarget.position) > attack_Distance) 
         {
             transform.LookAt(playerTarget);
             myBody.velocity = transform.forward * speed;
 
-            if(myBody.velocity.sqrMagnitude != 0)
+            if (myBody.velocity.sqrMagnitude != 0)
             {
                 enemyAnim.Walk(true);
             }
-        } else if(Vector3.Distance(transform.position, playerTarget.position) <= attack_Distance)
+
+        } else if (Vector3.Distance(transform.position, playerTarget.position) <= attack_Distance)
         {
             myBody.velocity = Vector3.zero;
             enemyAnim.Walk(false);
 
-            followPlayer() = false;
-            attackPlayer() = true;
+            followPlayer = false;
+            attackPlayer = true;
         }
     } // Follow target
 
